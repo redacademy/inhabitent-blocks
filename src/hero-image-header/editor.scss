@@ -1,0 +1,53 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-inhabitent-hero-image-header {
+	align-items: stretch;
+	display: flex;
+	justify-content: center;
+	min-height: 430px;
+
+	.image-wrapper {
+		position: relative;
+		width: 100%;
+	}
+
+	.entry-title-preview {
+		position: absolute;
+		text-align: center;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		top: 50%;
+
+		h1 {
+			font-weight: normal;
+			color: white;
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	button {
+		&.remove-image {
+			background-color: red;
+			border: 2px red;
+			padding: 5px 5px 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 0.9;
+
+			svg {
+				background: red;
+				fill: white;
+			}
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+}

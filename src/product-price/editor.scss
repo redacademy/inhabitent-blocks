@@ -1,0 +1,18 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-inhabitent-product-price {
+	.no-price {
+		opacity: 0.5;
+	}
+}
+
+.wp-block-inhabitent-blocks-product-price-meta {
+	label {
+		font-weight: bold;
+	}
+}
