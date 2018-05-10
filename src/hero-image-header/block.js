@@ -3,9 +3,9 @@ BLOCK: hero-image-header
  *
  */
 
-//  Import CSS.
 import './style.scss';
 import './editor.scss';
+
 import icons from './icons';
 
 const { __ } = wp.i18n;

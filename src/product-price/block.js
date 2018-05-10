@@ -3,7 +3,6 @@ BLOCK: product-price
  *
  */
 
-//  Import CSS.
 import './style.scss';
 import './editor.scss';
 
