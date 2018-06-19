@@ -9,7 +9,8 @@ import './editor.scss';
 import icons from './icons';
 
 const { __ } = wp.i18n;
-const { MediaUpload, registerBlockType } = wp.blocks;
+const { registerBlockType } = wp.blocks;
+const { MediaUpload } = wp.editor;
 const { Button, Spinner, withAPIData } = wp.components;
 
 class HeroImageHeader {
@@ -57,8 +58,6 @@ class HeroImageHeader {
 					imgID: null,
 				} );
 			};
-
-			console.log( heroImage );
 
 			if ( ! imgID ) {
 				return (
