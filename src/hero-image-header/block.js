@@ -13,69 +13,65 @@ const { registerBlockType } = wp.blocks;
 const { MediaUpload } = wp.editor;
 const { Button, Spinner } = wp.components;
 const { apiFetch } = wp;
-const {registerStore, withSelect} = wp.data;
-
+const { registerStore, withSelect } = wp.data;
 
 // https://wordpress.org/gutenberg/handbook/packages/packages-data/#registering-a-store
 const DEFAULT_STATE = {
-    heroImage: {},
+	heroImage: {},
 };
 
 const actions = {
-	fetchFromApi(path) {
+	fetchFromApi( path ) {
 		return {
 			type: 'FETCH_FROM_API',
-			path
-		}
+			path,
+		};
 	},
-	setHeroImage(heroImage, imgID) {
+	setHeroImage( heroImage, imgID ) {
 		return {
 			type: 'SET_HERO_IMAGE',
 			heroImage,
-            imgID
-		}
-	}
+			imgID,
+		};
+	},
 };
 
-registerStore('inhabitent/hero-images', {
-	reducer(state=DEFAULT_STATE,action) {
-		switch (action.type) {
+registerStore( 'inhabitent/hero-images', {
+	reducer( state = DEFAULT_STATE, action ) {
+		switch ( action.type ) {
 			case 'SET_HERO_IMAGE':
 				return {
 					...state,
 					heroImage: {
 						...state.heroImage,
-						[action.imgID]: action.heroImage
-					}
-				}
-        }
-        return state
-	},
-    actions,
-	selectors: {
-        getHeroImage(state, imgID) {
-			return state.heroImage[imgID]
+						[ action.imgID ]: action.heroImage,
+					},
+				};
 		}
+		return state;
+	},
+	actions,
+	selectors: {
+		getHeroImage( state, imgID ) {
+			return state.heroImage[ imgID ];
+		},
 	},
 	controls: {
-        FETCH_FROM_API(action) {
-            return apiFetch({path: action.path})
-        }
-    },
-    resolvers: {
-		* getHeroImage(imgID) {
-			if(!imgID) {
-                return actions.setHeroImage({}, null)
+		FETCH_FROM_API( action ) {
+			return apiFetch( { path: action.path } );
+		},
+	},
+	resolvers: {
+		*getHeroImage( imgID ) {
+			if ( ! imgID ) {
+				return actions.setHeroImage( {}, null );
 			}
-			const path = `/wp/v2/media/${ imgID }`
-			const heroImage = yield actions.fetchFromApi(path);
-			return actions.setHeroImage(heroImage, imgID)
-		}
-	}
-
-});
-
-
+			const path = `/wp/v2/media/${ imgID }`;
+			const heroImage = yield actions.fetchFromApi( path );
+			return actions.setHeroImage( heroImage, imgID );
+		},
+	},
+} );
 
 class HeroImageHeader {
 	title = __( 'Hero Image Header' );
@@ -101,12 +97,13 @@ class HeroImageHeader {
 	//
 	// @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 
-	edit = withSelect( function( select, { attributes: {imgID}} ) {
-        return {
-            title: select( 'core/editor' ).getEditedPostAttribute( 'title' ),
-            heroImage: select('inhabitent/hero-images').getHeroImage(imgID)
-        };
-    } ) ( ( {
+	edit = withSelect( function( select, { attributes: { imgID } } ) {
+		return {
+			title: select( 'core/editor' ).getEditedPostAttribute( 'title' ),
+			heroImage: select( 'inhabitent/hero-images' ).getHeroImage( imgID ),
+		};
+	} )(
+		( {
 			title,
 			heroImage,
 			attributes: { imgID },
@@ -142,7 +139,10 @@ class HeroImageHeader {
 					</div>
 				);
 			}
-        if ('undefined' === typeof heroImage || 'undefined' === typeof heroImage.media_details) {
+			if (
+				'undefined' === typeof heroImage ||
+				'undefined' === typeof heroImage.media_details
+			) {
 				return <Spinner />;
 			}
 
@@ -159,11 +159,7 @@ class HeroImageHeader {
 					>
 						<div className="image-wrapper">
 							<div className="entry-title-preview">
-								{ title ? (
-                                    <h1>{ title }</h1>
-								) : (
-                                    <h1>Loading title...</h1>
-								) }
+								{ title ? <h1>{ title }</h1> : <h1>Loading title...</h1> }
 							</div>
 
 							{ isSelected ? (
@@ -185,7 +181,7 @@ class HeroImageHeader {
 	// into the final markup, which is then serialized by Gutenberg into post_content.
 	//
 	// @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
- 	save = () => {
+	save = () => {
 		return null;
 	};
 }
